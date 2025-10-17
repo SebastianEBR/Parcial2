@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.uniquindio.edu.co.pdc.parcialinmobiliaria.controllers.InmuebleController">
+
+    <top>
+        <VBox spacing="8" padding="10">
+            <Label text="Registro de Inmuebles" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <GridPane hgap="10" vgap="8">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <Label text="Código:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                <TextField fx:id="txtCodigo" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                <Label text="Ciudad:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <TextField fx:id="txtCiudad" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Label text="Habitaciones:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <TextField fx:id="txtHabitaciones" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                <Label text="Pisos:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <TextField fx:id="txtPisos" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                <Label text="Precio:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                <TextField fx:id="txtPrecio" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                <Button text="Agregar Inmueble"
+                        fx:id="btnAgregar"
+                        onAction="#agregarInmueble"
+                        GridPane.rowIndex="5"
+                        GridPane.columnIndex="1"
+                        style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold;" />
+            </GridPane>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaInmuebles" prefHeight="250" prefWidth="600" padding="10">
+            <columns>
+                <TableColumn fx:id="colCodigo" text="Código" prefWidth="100" />
+                <TableColumn fx:id="colCiudad" text="Ciudad" prefWidth="120" />
+                <TableColumn fx:id="colHabitaciones" text="Habitaciones" prefWidth="100" />
+                <TableColumn fx:id="colPisos" text="Pisos" prefWidth="80" />
+                <TableColumn fx:id="colPrecio" text="Precio" prefWidth="120" />
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>

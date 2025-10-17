@@ -13,8 +13,8 @@ public class InmobiliariaFacade {
         this.database = InmobiliariaDatabase.getInstance();
     }
 
-    public Inmueble registrarInmueble(String tipo, String ciudad, int habitaciones, int pisos) {
-        Inmueble nuevo = FactoryInmueble.createInmueble(tipo, ciudad, habitaciones, pisos);
+    public Inmueble registrarInmueble(String tipo, String code, String ciudad, int habitaciones, int pisos, double precio) {
+        Inmueble nuevo = FactoryInmueble.createInmueble(tipo, code, ciudad, habitaciones, pisos, precio);
         database.addInmueble(nuevo);
         return nuevo;
     }
