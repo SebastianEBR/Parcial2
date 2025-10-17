@@ -1,6 +1,6 @@
 package org.uniquindio.edu.co.pdc.parcialinmobiliaria.model;
 
-// aca se utiliza el constructor abstracto de Inmueble
+// aca se utiliza el Builder abstracto de Inmueble
 public class Apartamento extends Inmueble {
 
     public Apartamento(Builder builder) {
