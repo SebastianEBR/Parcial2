@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.uniquindio.edu.co.pdc.parcialinmobiliaria/org.uniquindio.edu.co.pdc.parcialinmobiliaria.HelloApplication
+                                org.uniquindio.edu.co.pdc.parcialinmobiliaria/org.uniquindio.edu.co.pdc.parcialinmobiliaria.app.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

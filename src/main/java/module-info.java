@@ -5,4 +5,6 @@ module org.uniquindio.edu.co.pdc.parcialinmobiliaria {
 
     opens org.uniquindio.edu.co.pdc.parcialinmobiliaria to javafx.fxml;
     exports org.uniquindio.edu.co.pdc.parcialinmobiliaria;
+    exports org.uniquindio.edu.co.pdc.parcialinmobiliaria.app;
+    opens org.uniquindio.edu.co.pdc.parcialinmobiliaria.app to javafx.fxml;
 }

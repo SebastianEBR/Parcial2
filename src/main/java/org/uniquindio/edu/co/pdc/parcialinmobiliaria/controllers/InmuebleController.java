@@ -9,12 +9,12 @@ import org.uniquindio.edu.co.pdc.parcialinmobiliaria.model.Inmueble;
 
 public class InmuebleController {
 
-    @FXML private TextField txtTipo;
     @FXML private TextField txtCodigo;
     @FXML private TextField txtCiudad;
     @FXML private TextField txtHabitaciones;
     @FXML private TextField txtPisos;
     @FXML private TextField txtPrecio;
+    @FXML private ComboBox<String> cmbTipo; // <-- para seleccionar el tipo de inmueble
     @FXML private Button btnAgregar;
 
     @FXML private TableView<Inmueble> tablaInmuebles;
@@ -23,11 +23,15 @@ public class InmuebleController {
     @FXML private TableColumn<Inmueble, Integer> colHabitaciones;
     @FXML private TableColumn<Inmueble, Integer> colPisos;
     @FXML private TableColumn<Inmueble, Double> colPrecio;
+    @FXML private TableColumn<Inmueble, String> colTipo;
 
     private final ObservableList<Inmueble> listaInmuebles = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        // Tipos de inmueble
+        cmbTipo.setItems(FXCollections.observableArrayList("Casa", "Apartamento", "Finca", "Local"));
+
         // Configurar columnas
         colCodigo.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCode()));
         colCiudad.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getCiudad()));
@@ -35,33 +39,39 @@ public class InmuebleController {
         colPisos.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getNumPisos()));
         colPrecio.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPrecio()));
 
+        // Columna tipo (simplemente el nombre de la clase)
+        colTipo.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(
+                data.getValue().getClass().getSimpleName()
+        ));
+
         tablaInmuebles.setItems(listaInmuebles);
     }
 
     @FXML
     private void agregarInmueble() {
         try {
-            String type = txtTipo.getText();
-            String code = txtCodigo.getText();
-            String ciudad = txtCiudad.getText();
-            int numHabitaciones = Integer.parseInt(txtHabitaciones.getText());
-            int numPisos = Integer.parseInt(txtPisos.getText());
-            double precio = Double.parseDouble(txtPrecio.getText());
+            String tipo = cmbTipo.getValue();
+            String codigo = txtCodigo.getText().trim();
+            String ciudad = txtCiudad.getText().trim();
+            int habitaciones = Integer.parseInt(txtHabitaciones.getText().trim());
+            int pisos = Integer.parseInt(txtPisos.getText().trim());
+            double precio = Double.parseDouble(txtPrecio.getText().trim());
 
-            Inmueble nuevo = new FactoryInmueble.createInmueble(type, code, ciudad, numHabitaciones, numPisos, precio) {
+            if (tipo == null || tipo.isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Selecciona el tipo de inmueble.").show();
+                return;
             }
-                    .setCode(code)
-                    .setCiudad(ciudad)
-                    .setNumHabitaciones(numHabitaciones)
-                    .setNumPisos(numPisos)
-                    .setPrecio(precio)
-                    .build();
+
+            // ✅ Usamos tu FactoryInmueble
+            Inmueble nuevo = FactoryInmueble.createInmueble(tipo, codigo, ciudad, habitaciones, pisos, precio);
 
             listaInmuebles.add(nuevo);
             limpiarCampos();
 
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Por favor ingresa valores numéricos válidos.").show();
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Verifica los datos ingresados").show();
+            new Alert(Alert.AlertType.ERROR, "Error al crear el inmueble: " + e.getMessage()).show();
         }
     }
 
@@ -71,5 +81,6 @@ public class InmuebleController {
         txtHabitaciones.clear();
         txtPisos.clear();
         txtPrecio.clear();
+        cmbTipo.getSelectionModel().clearSelection();
     }
 }
