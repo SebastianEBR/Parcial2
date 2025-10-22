@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.uniquindio.edu.co.pdc.parcialinmobiliaria.database.InmobiliariaDatabase;
+import org.uniquindio.edu.co.pdc.parcialinmobiliaria.facade.InmobiliariaFacade;
 import org.uniquindio.edu.co.pdc.parcialinmobiliaria.model.FactoryInmueble;
 import org.uniquindio.edu.co.pdc.parcialinmobiliaria.model.Inmueble;
 
@@ -27,6 +29,7 @@ public class InmuebleController {
     @FXML private TableColumn<Inmueble, String> colTipo;
 
     private final ObservableList<Inmueble> listaInmuebles = FXCollections.observableArrayList();
+    private InmobiliariaFacade inmobiliariaFacade = new InmobiliariaFacade();
 
     @FXML
     public void initialize() {
@@ -45,12 +48,19 @@ public class InmuebleController {
                 data.getValue().getClass().getSimpleName()
         ));
 
-        listaInmuebles.addAll(
-                FactoryInmueble.createInmueble("Casa", "C001", "Bogotá", 3, 2, 250000.0),
-                FactoryInmueble.createInmueble("Apartamento", "A002", "Medellín", 2, 1, 180000.0),
-                FactoryInmueble.createInmueble("Finca", "F003", "Armenia", 4, 1, 400000.0),
-                FactoryInmueble.createInmueble("Local", "L004", "Cali", 0, 1, 600000.0)
-        );
+
+        Inmueble i1 = FactoryInmueble.createInmueble("Casa", "C001", "Bogotá", 3, 2, 250000.0);
+        Inmueble i2 = FactoryInmueble.createInmueble("Apartamento", "A002", "Medellín", 2, 1, 180000.0);
+        Inmueble i3 = FactoryInmueble.createInmueble("Finca", "F003", "Armenia", 4, 1, 400000.0);
+        Inmueble i4 = FactoryInmueble.createInmueble("Local", "L004", "Cali", 0, 1, 600000.0);
+
+        listaInmuebles.addAll(i1, i2, i3, i4);
+
+        //esto solo se hace para pruebas
+        InmobiliariaDatabase.getInstance().addInmueble(i1);
+        InmobiliariaDatabase.getInstance().addInmueble(i4);
+        InmobiliariaDatabase.getInstance().addInmueble(i2);
+        InmobiliariaDatabase.getInstance().addInmueble(i3);
 
         tablaInmuebles.setItems(listaInmuebles);
     }
@@ -70,8 +80,8 @@ public class InmuebleController {
                 return;
             }
 
-            // Usamos tu FactoryInmueble
-            Inmueble nuevo = FactoryInmueble.createInmueble(tipo, codigo, ciudad, habitaciones, pisos, precio);
+            // Usamos el facade
+            Inmueble nuevo = inmobiliariaFacade.registrarInmueble(tipo, codigo, ciudad, habitaciones, pisos, precio);
 
             listaInmuebles.add(nuevo);
             limpiarCampos();
@@ -88,6 +98,7 @@ public class InmuebleController {
         Inmueble seleccionado = tablaInmuebles.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             tablaInmuebles.getItems().remove(seleccionado);
+            inmobiliariaFacade.eliminarInmueble(seleccionado);
         } else {
             // opcional: alerta si no hay nada seleccionado
             System.out.println("Seleccione un inmueble para eliminar.");

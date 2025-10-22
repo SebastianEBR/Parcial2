@@ -7,10 +7,10 @@ import org.uniquindio.edu.co.pdc.parcialinmobiliaria.model.Inmueble;
 import java.util.ArrayList;
 
 public class InmobiliariaFacade {
-    private InmobiliariaDatabase database;
+    private static InmobiliariaDatabase database;
 
     public InmobiliariaFacade() {
-        this.database = InmobiliariaDatabase.getInstance();
+        database = InmobiliariaDatabase.getInstance();
     }
 
     public Inmueble registrarInmueble(String tipo, String code, String ciudad, int habitaciones, int pisos, double precio) {
@@ -23,7 +23,7 @@ public class InmobiliariaFacade {
         return database.getInmuebles();
     }
 
-    public void eliminarInmueble(String id) {
-        //database.deleteInmueble(id);
+    public void eliminarInmueble(Inmueble inmueble) {
+        database.deleteInmueble(inmueble);
     }
 }

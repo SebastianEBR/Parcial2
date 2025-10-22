@@ -28,7 +28,12 @@ public class InmobiliariaDatabase {
     }
 
     public void deleteInmueble(Inmueble inmueble) {
-        this.inmuebles.remove(inmueble);
+        Optional<Inmueble> iAux = findInmuebleByCode(inmueble.getCode());
+        if (iAux.isPresent()) {
+            this.inmuebles.remove(iAux.get());
+        }else{
+            throw new RuntimeException("Inmueble no encontrado");
+        }
     }
 
     public ArrayList<Inmueble> getInmuebles() {

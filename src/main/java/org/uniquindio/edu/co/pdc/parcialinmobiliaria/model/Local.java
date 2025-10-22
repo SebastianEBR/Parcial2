@@ -2,7 +2,7 @@ package org.uniquindio.edu.co.pdc.parcialinmobiliaria.model;
 
 // aca se utiliza el Builder abstracto de Inmueble
 public class Local extends Inmueble {
-    public Local(Builder builder) {
+    private Local(Builder builder) {
         super(builder);
     }
 
