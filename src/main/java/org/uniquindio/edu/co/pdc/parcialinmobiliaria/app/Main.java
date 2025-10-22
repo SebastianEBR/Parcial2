@@ -23,6 +23,7 @@ public class Main {
                 ,1
                 ,500000
         );
+
         Inmueble local1 = FactoryInmueble.createInmueble("local"
                 ,"003"
                 ,"Popayan"
@@ -30,6 +31,7 @@ public class Main {
                 ,1
                 ,700000
         );
+
         Inmueble finca1 = FactoryInmueble.createInmueble("finca"
                 ,"004"
                 ,"Medellin"

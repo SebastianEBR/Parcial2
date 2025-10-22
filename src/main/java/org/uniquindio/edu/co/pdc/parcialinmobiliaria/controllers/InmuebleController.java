@@ -16,6 +16,7 @@ public class InmuebleController {
     @FXML private TextField txtPrecio;
     @FXML private ComboBox<String> cmbTipo; // <-- para seleccionar el tipo de inmueble
     @FXML private Button btnAgregar;
+    @FXML private Button btnEliminar;
 
     @FXML private TableView<Inmueble> tablaInmuebles;
     @FXML private TableColumn<Inmueble, String> colCodigo;
@@ -44,6 +45,13 @@ public class InmuebleController {
                 data.getValue().getClass().getSimpleName()
         ));
 
+        listaInmuebles.addAll(
+                FactoryInmueble.createInmueble("Casa", "C001", "Bogotá", 3, 2, 250000.0),
+                FactoryInmueble.createInmueble("Apartamento", "A002", "Medellín", 2, 1, 180000.0),
+                FactoryInmueble.createInmueble("Finca", "F003", "Armenia", 4, 1, 400000.0),
+                FactoryInmueble.createInmueble("Local", "L004", "Cali", 0, 1, 600000.0)
+        );
+
         tablaInmuebles.setItems(listaInmuebles);
     }
 
@@ -62,7 +70,7 @@ public class InmuebleController {
                 return;
             }
 
-            // ✅ Usamos tu FactoryInmueble
+            // Usamos tu FactoryInmueble
             Inmueble nuevo = FactoryInmueble.createInmueble(tipo, codigo, ciudad, habitaciones, pisos, precio);
 
             listaInmuebles.add(nuevo);
@@ -72,6 +80,17 @@ public class InmuebleController {
             new Alert(Alert.AlertType.ERROR, "Por favor ingresa valores numéricos válidos.").show();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Error al crear el inmueble: " + e.getMessage()).show();
+        }
+    }
+
+    @FXML
+    private void eliminarInmueble() {
+        Inmueble seleccionado = tablaInmuebles.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            tablaInmuebles.getItems().remove(seleccionado);
+        } else {
+            // opcional: alerta si no hay nada seleccionado
+            System.out.println("Seleccione un inmueble para eliminar.");
         }
     }
 
